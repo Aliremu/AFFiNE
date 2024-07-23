@@ -1133,3 +1133,18 @@ query workspaceQuota($id: String!) {
   }
 }`,
 };
+
+// TODO(@Aliremu)
+export const getShareLinkQuery = {
+  id: 'getShareLinkQuery' as const,
+  operationName: 'getShareLink',
+  definitionName: 'shareLink',
+  containsFile: false,
+  query: `
+query getShareLink($alias: String!) {
+  shareLink(alias: $alias) {
+    workspaceId
+    pageId
+  }
+}`,
+};

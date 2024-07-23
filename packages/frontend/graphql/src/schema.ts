@@ -807,7 +807,31 @@ export interface Query {
   workspace: WorkspaceType;
   /** Get all accessible workspaces for current user */
   workspaces: Array<WorkspaceType>;
+
+  // TODO(@Aliremu)
+  shareLink: ShareLink;
 }
+
+// TODO(@Aliremu)
+export interface ShareLink {
+  __typename?: 'ShareLink';
+  workspaceId: Scalars['String']['output'];
+  pageId: Scalars['String']['output'];
+  alias: Scalars['String']['output'];
+}
+
+export type GetShareLinkQueryVariables = Exact<{
+  alias: Scalars['String']['input'];
+}>;
+
+export type GetShareLinkQuery = {
+  __typename?: 'Query';
+  shareLink: {
+    __typename?: 'ShareLink';
+    workspaceId: string;
+    pageId: string;
+  };
+};
 
 export interface QueryCheckBlobSizeArgs {
   size: Scalars['SafeInt']['input'];
@@ -1150,6 +1174,9 @@ export interface WorkspacePage {
   mode: PublicPageMode;
   public: Scalars['Boolean']['output'];
   workspaceId: Scalars['String']['output'];
+
+  // TODO(Aliremu)
+  shareLink: ShareLink;
 }
 
 export interface WorkspaceType {
@@ -1182,6 +1209,7 @@ export interface WorkspaceType {
   publicPages: Array<WorkspacePage>;
   /** quota of workspace */
   quota: QuotaQueryType;
+
   /**
    * Shared pages of workspace
    * @deprecated use WorkspaceType.publicPages
@@ -2566,4 +2594,10 @@ export type Mutations =
       name: 'acceptInviteByInviteIdMutation';
       variables: AcceptInviteByInviteIdMutationVariables;
       response: AcceptInviteByInviteIdMutation;
+    }
+  // TODO(@Aliremu)
+  | {
+      name: 'getShareLinkQuery';
+      variables: GetShareLinkQueryVariables;
+      response: GetShareLinkQuery;
     };

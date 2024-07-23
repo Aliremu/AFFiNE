@@ -44,6 +44,12 @@ export const topLevelRoutes = [
         path: '/share/:workspaceId/:pageId',
         lazy: () => import('./pages/share/share-detail-page'),
       },
+
+      // TODO(@Aliremu): Added route for custom share url
+      {
+        path: '/blog/:blogUrl',
+        lazy: () => import('./pages/blog/share-detail-page'),
+      },
       {
         path: '/404',
         lazy: () => import('./pages/404'),

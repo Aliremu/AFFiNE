@@ -17,6 +17,7 @@ import {
   PageIsNotPublic,
 } from '../../../fundamentals';
 import { CurrentUser } from '../../auth';
+import { ShareLink } from '../../share/resolver';
 import { DocID } from '../../utils/doc';
 import { PermissionService, PublicPageMode } from '../permission';
 import { Permission, WorkspaceType } from '../types';
@@ -39,6 +40,10 @@ class WorkspacePage implements Partial<PrismaWorkspacePage> {
 
   @Field()
   public!: boolean;
+
+  // TODO(@Aliremu)
+  @Field()
+  shareLink!: ShareLink;
 }
 
 @Resolver(() => WorkspaceType)

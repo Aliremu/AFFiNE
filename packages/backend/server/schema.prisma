@@ -114,11 +114,26 @@ model WorkspacePage {
   public      Boolean @default(false)
   // Page/Edgeless
   mode        Int     @default(0) @db.SmallInt
+  // ShareLink alias
+  shareLink   ShareLink?
 
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@id([workspaceId, pageId])
   @@map("workspace_pages")
+}
+
+// TODO(@Aliremu)
+// Alias for publicly shared links
+model ShareLink {
+  workspaceId String  @map("workspace_id") @db.VarChar(36)
+  pageId      String  @map("page_id") @db.VarChar(36)
+  alias       String  @id @map("alias") @db.VarChar(36)
+
+  page WorkspacePage @relation(fields: [workspaceId, pageId], references: [workspaceId, pageId], onDelete: Cascade)
+
+  @@unique([workspaceId, pageId])
+  @@map("share_links")
 }
 
 // @deprecated, use WorkspaceUserPermission

@@ -1,8 +1,14 @@
+/**
+ * Author: Aliremu <williamzhang106@gmail.com>
+ * Created: 7/22/2024
+ */
+
 import { Scrollable } from '@affine/component';
 import { useActiveBlocksuiteEditor } from '@affine/core/hooks/use-block-suite-editor';
 import { usePageDocumentTitle } from '@affine/core/hooks/use-global-state';
 // import { AuthService } from '@affine/core/modules/cloud';
 import { WorkspaceFlavour } from '@affine/env/workspace';
+import { fetcher, getShareLinkQuery } from '@affine/graphql';
 // import { useI18n } from '@affine/i18n';
 import { noop } from '@blocksuite/global/utils';
 // import { Logo1Icon } from '@blocksuite/icons/rc';
@@ -84,8 +90,35 @@ function assertDownloadResponse(
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const workspaceId = params?.workspaceId;
-  const pageId = params?.pageId;
+  // const workspaceId = params?.workspaceId;
+  // const pageId = params?.pageId;
+
+  const blogUrl = params?.blogUrl || '';
+
+  const { shareLink } = await fetcher({
+    query: getShareLinkQuery,
+    variables: {
+      alias: blogUrl,
+    },
+  });
+
+  // const data = useQuery({
+  //   query: getShareLinkQuery,
+  //   variables: {
+  //     id: blogUrl!
+  //   },
+  // });
+
+  // const { data } = useQuery({
+  //   query: getUserFeaturesQuery,
+  // });
+
+  // console.log(data);
+
+  const workspaceId = shareLink.workspaceId;
+
+  const pageId = shareLink.pageId;
+
   if (!workspaceId || !pageId) {
     return redirect('/404');
   }
@@ -239,7 +272,7 @@ export const Component = () => {
                   <Scrollable.Scrollbar />
                 </Scrollable.Root>
 
-                {/* TODO(@Aliremu): Remove watermark */}
+                {/* TODO(Aliremu) */}
                 {/* {loginStatus !== 'authenticated' ? (
                   <a
                     href="https://affine.pro"

@@ -16,6 +16,7 @@ import { ADD_ENABLED_FEATURES, ServerConfigModule } from './core/config';
 import { DocModule } from './core/doc';
 import { FeatureModule } from './core/features';
 import { QuotaModule } from './core/quota';
+import { ShareModule } from './core/share';
 import { StorageModule } from './core/storage';
 import { SyncModule } from './core/sync';
 import { UserModule } from './core/user';
@@ -168,6 +169,9 @@ function buildAppModule() {
       StorageModule,
       UserModule,
       WorkspaceModule,
+
+      // TODO(@Aliremu)
+      ShareModule,
       FeatureModule,
       QuotaModule
     )

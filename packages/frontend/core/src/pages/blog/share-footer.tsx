@@ -1,3 +1,8 @@
+/**
+ * Author: Aliremu <williamzhang106@gmail.com>
+ * Created: 7/22/2024
+ */
+
 // import { useI18n } from '@affine/i18n';
 // import { ArrowRightBigIcon } from '@blocksuite/icons/rc';
 
@@ -7,7 +12,6 @@ export const ShareFooter = () => {
   // const t = useI18n();
   return (
     <div>
-      {/* TODO(@Aliremu): Remove watermark */}
       {/* <div className={styles.footer}>
         <div className={styles.description}>
           {t['com.affine.share-page.footer.description']()}

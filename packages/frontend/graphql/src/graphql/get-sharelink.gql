@@ -1,0 +1,11 @@
+#
+# Author: Aliremu <williamzhang106@gmail.com>
+# Created: 7/22/2024
+#
+
+query getShareLink($alias: String!) {
+  shareLink(alias: $alias) {
+    workspaceId
+    pageId
+  }
+}
