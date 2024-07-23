@@ -169,14 +169,17 @@ function buildAppModule() {
       StorageModule,
       UserModule,
       WorkspaceModule,
-
-      // TODO(@Aliremu)
-      ShareModule,
       FeatureModule,
       QuotaModule
     )
 
     // self hosted server only
+    .useIf(
+      config => config.isSelfhosted,
+      // TODO(@Aliremu)
+      ShareModule
+    )
+
     .useIf(
       config => config.isSelfhosted,
       ServeStaticModule.forRoot({

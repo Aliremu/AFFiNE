@@ -456,6 +456,20 @@ query getServerRuntimeConfig {
 }`,
 };
 
+export const getShareLinkQuery = {
+  id: 'getShareLinkQuery' as const,
+  operationName: 'getShareLink',
+  definitionName: 'shareLink',
+  containsFile: false,
+  query: `
+query getShareLink($alias: String!) {
+  shareLink(alias: $alias) {
+    workspaceId
+    pageId
+  }
+}`,
+};
+
 export const getUserFeaturesQuery = {
   id: 'getUserFeaturesQuery' as const,
   operationName: 'getUserFeatures',
@@ -1130,21 +1144,6 @@ query workspaceQuota($id: String!) {
       }
       usedSize
     }
-  }
-}`,
-};
-
-// TODO(@Aliremu)
-export const getShareLinkQuery = {
-  id: 'getShareLinkQuery' as const,
-  operationName: 'getShareLink',
-  definitionName: 'shareLink',
-  containsFile: false,
-  query: `
-query getShareLink($alias: String!) {
-  shareLink(alias: $alias) {
-    workspaceId
-    pageId
   }
 }`,
 };

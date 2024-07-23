@@ -14,6 +14,7 @@ export const NavigateContext = createContext<NavigateFunction | null>(null);
 function RootRouter() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
+
   useEffect(() => {
     // a hack to make sure router is ready
     setReady(true);
@@ -47,7 +48,7 @@ export const topLevelRoutes = [
 
       // TODO(@Aliremu): Added route for custom share url
       {
-        path: '/blog/:blogUrl',
+        path: `/${process.env.CUSTOM_SHARE_PATH ?? 'blog'}/:blogUrl`,
         lazy: () => import('./pages/blog/share-detail-page'),
       },
       {

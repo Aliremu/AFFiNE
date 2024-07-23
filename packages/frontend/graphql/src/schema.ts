@@ -789,14 +789,14 @@ export interface Query {
    * @deprecated use `workspace.blobs` instead
    */
   listBlobs: Array<Scalars['String']['output']>;
-  /** List all copilot prompts */
-  listCopilotPrompts: Array<CopilotPromptType>;
   listWorkspaceFeatures: Array<WorkspaceType>;
   prices: Array<SubscriptionPrice>;
   /** server config */
   serverConfig: ServerConfigType;
   /** get all server runtime configurable settings */
   serverRuntimeConfig: Array<ServerRuntimeConfigType>;
+  /** Get share link from alias */
+  shareLink: ShareLink;
   /** Get user by email */
   user: Maybe<UserOrLimitedUser>;
   /** Get user by id */
@@ -807,31 +807,7 @@ export interface Query {
   workspace: WorkspaceType;
   /** Get all accessible workspaces for current user */
   workspaces: Array<WorkspaceType>;
-
-  // TODO(@Aliremu)
-  shareLink: ShareLink;
 }
-
-// TODO(@Aliremu)
-export interface ShareLink {
-  __typename?: 'ShareLink';
-  workspaceId: Scalars['String']['output'];
-  pageId: Scalars['String']['output'];
-  alias: Scalars['String']['output'];
-}
-
-export type GetShareLinkQueryVariables = Exact<{
-  alias: Scalars['String']['input'];
-}>;
-
-export type GetShareLinkQuery = {
-  __typename?: 'Query';
-  shareLink: {
-    __typename?: 'ShareLink';
-    workspaceId: string;
-    pageId: string;
-  };
-};
 
 export interface QueryCheckBlobSizeArgs {
   size: Scalars['SafeInt']['input'];
@@ -856,6 +832,10 @@ export interface QueryListBlobsArgs {
 
 export interface QueryListWorkspaceFeaturesArgs {
   feature: FeatureType;
+}
+
+export interface QueryShareLinkArgs {
+  alias: Scalars['String']['input'];
 }
 
 export interface QueryUserArgs {
@@ -971,6 +951,13 @@ export interface ServerRuntimeConfigType {
   type: RuntimeConfigType;
   updatedAt: Scalars['DateTime']['output'];
   value: Scalars['JSON']['output'];
+}
+
+export interface ShareLink {
+  __typename?: 'ShareLink';
+  alias: Scalars['String']['output'];
+  pageId: Scalars['String']['output'];
+  workspaceId: Scalars['String']['output'];
 }
 
 export interface SubscriptionAlreadyExistsDataType {
@@ -1173,10 +1160,8 @@ export interface WorkspacePage {
   id: Scalars['String']['output'];
   mode: PublicPageMode;
   public: Scalars['Boolean']['output'];
-  workspaceId: Scalars['String']['output'];
-
-  // TODO(Aliremu)
   shareLink: ShareLink;
+  workspaceId: Scalars['String']['output'];
 }
 
 export interface WorkspaceType {
@@ -1209,7 +1194,6 @@ export interface WorkspaceType {
   publicPages: Array<WorkspacePage>;
   /** quota of workspace */
   quota: QuotaQueryType;
-
   /**
    * Shared pages of workspace
    * @deprecated use WorkspaceType.publicPages
@@ -1637,6 +1621,15 @@ export type GetServerRuntimeConfigQuery = {
     type: RuntimeConfigType;
     updatedAt: string;
   }>;
+};
+
+export type GetShareLinkQueryVariables = Exact<{
+  alias: Scalars['String']['input'];
+}>;
+
+export type GetShareLinkQuery = {
+  __typename?: 'Query';
+  shareLink: { __typename?: 'ShareLink'; workspaceId: string; pageId: string };
 };
 
 export type GetUserFeaturesQueryVariables = Exact<{ [key: string]: never }>;
@@ -2304,6 +2297,11 @@ export type Queries =
       response: GetServerRuntimeConfigQuery;
     }
   | {
+      name: 'getShareLinkQuery';
+      variables: GetShareLinkQueryVariables;
+      response: GetShareLinkQuery;
+    }
+  | {
       name: 'getUserFeaturesQuery';
       variables: GetUserFeaturesQueryVariables;
       response: GetUserFeaturesQuery;
@@ -2594,10 +2592,4 @@ export type Mutations =
       name: 'acceptInviteByInviteIdMutation';
       variables: AcceptInviteByInviteIdMutationVariables;
       response: AcceptInviteByInviteIdMutation;
-    }
-  // TODO(@Aliremu)
-  | {
-      name: 'getShareLinkQuery';
-      variables: GetShareLinkQueryVariables;
-      response: GetShareLinkQuery;
     };

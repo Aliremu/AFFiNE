@@ -345,6 +345,11 @@ export const createConfiguration: (
           process.env.MIXPANEL_TOKEN
         ),
         'process.env.DEBUG_JOTAI': JSON.stringify(process.env.DEBUG_JOTAI),
+
+        // TODO(@Aliremu)
+        'process.env.CUSTOM_SHARE_PATH': JSON.stringify(
+          process.env.CUSTOM_SHARE_PATH
+        ),
         runtimeConfig: JSON.stringify(runtimeConfig),
       }),
       buildFlags.distribution === 'admin'
@@ -372,6 +377,7 @@ export const createConfiguration: (
     optimization: OptimizeOptionOptions(buildFlags),
 
     devServer: {
+      allowedHosts: 'all',
       hot: 'only',
       liveReload: true,
       client: {

@@ -58,6 +58,9 @@
         },
         {
           "env": "R2_SECRET_ACCESS_KEY"
+        },
+        {
+          "env": "CUSTOM_SHARE_PATH"
         }
       ],
       "options": {

@@ -529,17 +529,17 @@ type Query {
 
   """List blobs of workspace"""
   listBlobs(workspaceId: String!): [String!]! @deprecated(reason: "use `workspace.blobs` instead")
-
-  """List all copilot prompts"""
-  listCopilotPrompts: [CopilotPromptType!]!
   listWorkspaceFeatures(feature: FeatureType!): [WorkspaceType!]!
   prices: [SubscriptionPrice!]!
-
+  
   """server config"""
   serverConfig: ServerConfigType!
 
   """get all server runtime configurable settings"""
   serverRuntimeConfig: [ServerRuntimeConfigType!]!
+
+  """Get share link from alias"""
+  shareLink(alias: String!): ShareLink!
 
   """Get user by email"""
   user(email: String!): UserOrLimitedUser
@@ -555,6 +555,12 @@ type Query {
 
   """Get all accessible workspaces for current user"""
   workspaces: [WorkspaceType!]!
+}
+
+type ShareLink {
+  alias: String!
+  pageId: String!
+  workspaceId: String!
 }
 
 input QueryChatHistoriesInput {
@@ -837,6 +843,7 @@ type WorkspacePage {
   id: String!
   mode: PublicPageMode!
   public: Boolean!
+  shareLink: ShareLink!
   workspaceId: String!
 }
 
